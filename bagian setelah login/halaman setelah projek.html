@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="stylecss.css">
 </head>
 <body>
-    <div class="card-container {{BOX_CLASS}}">
+    <div class="card-container">
         <div class="icon-badge">
             <!-- Icon SVG -->
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
@@ -24,8 +24,12 @@
         <p class="subtitle">Sistem telah memverifikasi identitas Anda <br> Sesi login aman baru saja diaktifkan</p>
 
         <div class="btn-group">
-            <a href="{{BTN_PRIMARY_LINK}}" class="btn btn-primary">Lanjut Ke Menu Utama</a>
-            <a href="{{BTN_SECONDARY_LINK}}" class="btn btn-outline">Keluar/Logout</a>
+            <form action="halamanutama.php" method="get">
+                <button type="submit" class="btn btn-primary">Lanjut Ke Menu Utama</button>
+            </form>
+            <form action="bagiankeluar.php" method="POST">
+                <button type="submit" class="btn btn-outline">Keluar/Logout</button>
+            </form>
         </div>
     </div>
 </body>

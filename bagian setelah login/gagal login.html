@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gagal Masuk ke Akun</title>
+    <title>Login Gagal</title>
     <link rel="stylesheet" href="style1.css">
 </head>
 <body>
@@ -25,33 +25,16 @@
         </div>
 
         <h1>Gagal Masuk ke Akun</h1>
-        <p class="subtitle">Kombinasi email atau kata sandi yang Anda masukkan tidak cocok dengan catatan kami.</p>
-
-        <!-- Kotak Batas Percobaan -->
-        <div class="attempts-box">
-            <div class="attempts-header">
-                <span class="attempts-title">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                        <path fill-rule="evenodd" d="M12 1.5a5.25 5.25 0 00-5.25 5.25v3a3 3 0 00-3 3v6.75a3 3 0 003 3h10.5a3 3 0 003-3v-6.75a3 3 0 00-3-3v-3c0-2.9-2.35-5.25-5.25-5.25zm3 8.25v-3a3 3 0 10-6 0v3h6z" clip-rule="evenodd" />
-                    </svg>
-                    Batas Percobaan Login
-                </span>
-                <span class="attempts-badge">{{ATTEMPTS_REMAINING_BADGE}}</span>
-            </div>
-            
-            <div class="progress-track">
-                <div class="progress-fill" style=></div>
-            </div>
-            
-            <div class="attempts-footer-text">
-                *{{WARNING_POLICY_TEXT}}
-            </div>
-        </div>
+        <p class="subtitle">Kombinasi email atau kata sandi yang Anda masukkan tidak cocok dengan catatan kami <br> klik coba lagi login untuk mengulang login atau klik lupa sandi untuk membuat akun baru</p>
 
         <!-- Tombol Aksi -->
         <div class="btn-group">
-            <a href="{{BTN_PRIMARY_LINK}}" class="btn btn-danger">Coba Login Lagi</a>
-            <a href="{{BTN_SECONDARY_LINK}}" class="btn btn-dark">Lupa Password?</a>
+            <form action="bagiangagal.php">
+                <button type="submit" class="btn btn-danger">Coba Lagi</button>
+            </form>
+            <form action="bagiankeluar.php" method="POST">
+                <button type="submit" class="btn btn-dark">Lupa Password?</button>
+            </form>
         </div>
     </div>
 
