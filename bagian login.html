@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page - Dapurku</title>
+
+    <!-- Seluruh CSS halaman ini ditulis di sini (tanpa file CSS terpisah) -->
+    <style>
+        /* Warna-warna yang dipakai, diambil dari tema cokelat Register_Page.html */
+        :root {
+            --cokelat-tua: #2f2623;
+            --cokelat: #4d4440;
+            --krem: #f3e9d2;
+            --emas: #e0b85c;
+            --emas-gelap: #bb9e6a;
+        }
+
+        /* Lebar elemen sudah termasuk padding dan border */
+        * { box-sizing: border-box; }
+
+        /* Seluruh halaman: form diletakkan tepat di tengah layar (flex) */
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            color: #fff;
+            background:
+                radial-gradient(circle at 20% 15%, rgba(187, 158, 106, 0.28), transparent 45%),
+                linear-gradient(160deg, var(--cokelat-tua), var(--cokelat));
+            background-attachment: fixed;
+        }
+
+        /* Lapisan hiasan di belakang: lingkaran-lingkaran kabur yang melayang pelan */
+        .latar {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none; /* tidak menghalangi klik */
+        }
+
+        .bola {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(224, 184, 92, 0.55), rgba(224, 184, 92, 0.05));
+            filter: blur(2px);
+            animation: melayang 14s ease-in-out infinite;
+        }
+
+        /* Ukuran dan posisi tiap lingkaran */
+        .bola:nth-child(1) { width: 220px; height: 220px; top: -60px;  left: -50px; }
+        .bola:nth-child(2) { width: 130px; height: 130px; top: 62%;   left: 8%;    animation-delay: -4s; }
+        .bola:nth-child(3) { width: 300px; height: 300px; bottom: -110px; right: -70px; animation-delay: -8s; }
+        .bola:nth-child(4) { width: 90px;  height: 90px;  top: 14%;   right: 14%;  animation-delay: -2s; }
+
+        /* Gerakan naik-turun pelan */
+        @keyframes melayang {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50%      { transform: translateY(-26px) scale(1.06); }
+        }
+
+        /* Kotak login di tengah: tampilan kaca (transparan + blur) */
+        .kartu {
+            position: relative;
+            width: 100%;
+            max-width: 420px;
+            padding: 34px 30px 26px;
+            background: rgba(150, 139, 107, 0.32);
+            border: 1px solid rgba(243, 233, 210, 0.35);
+            border-radius: 18px;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            animation: masuk 0.6s ease-out;
+        }
+
+        /* Kotak muncul pelan dari bawah saat halaman dibuka */
+        @keyframes masuk {
+            from { opacity: 0; transform: translateY(18px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Bagian judul di tengah kotak */
+        .judul { text-align: center; margin-bottom: 20px; }
+
+        /* Tulisan kecil "DAPURKU" berwarna emas di atas judul */
+        .merek {
+            display: inline-block;
+            margin-bottom: 8px;
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 4px;
+            color: var(--emas);
+        }
+
+        .judul h1 { margin: 0 0 6px; font-size: 30px; }
+
+        .judul p { margin: 0; font-size: 15px; color: rgba(255, 255, 255, 0.8); }
+
+        /* Garis emas tipis pemisah judul dan form */
+        .garis-emas {
+            height: 3px;
+            width: 64px;
+            margin: 16px auto 0;
+            border-radius: 3px;
+            background: linear-gradient(90deg, var(--emas), var(--emas-gelap));
+        }
+
+        /* Satu kolom isian (label + input) */
+        .kolom { margin-bottom: 18px; }
+
+        .kolom label {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 15px;
+            font-weight: bold;
+            color: var(--krem);
+        }
+
+        /* Kolom isian email dan password */
+        .kolom input {
+            width: 100%;
+            padding: 12px 14px;
+            font-size: 15px;
+            font-family: inherit;
+            color: #2b2420;
+            background: #fffdf8;
+            border: 2px solid transparent;
+            border-radius: 8px;
+        }
+
+        .kolom input::placeholder { color: #8c8279; }
+
+        /* Cincin emas saat kolom diklik */
+        .kolom input:focus {
+            outline: none;
+            border-color: var(--emas);
+            box-shadow: 0 0 0 4px rgba(224, 184, 92, 0.35);
+        }
+
+        /* Tombol Masuk: emas dengan tulisan gelap, naik sedikit saat disentuh kursor */
+        .tombol-masuk {
+            width: 100%;
+            padding: 14px;
+            margin-top: 6px;
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            color: #2b2013;
+            background: linear-gradient(135deg, var(--emas), #f0cd7d);
+            border: 0;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(224, 184, 92, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .tombol-masuk:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(224, 184, 92, 0.4); }
+        .tombol-masuk:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+
+        /* Tulisan "Belum punya akun?" di bawah tombol */
+        .link-daftar {
+            margin: 20px 0 0;
+            text-align: center;
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .link-daftar a { color: var(--emas); font-weight: bold; }
+
+        /* Kotak "Tips dapur": 5 tips ditumpuk di satu tempat (grid), lalu muncul bergantian lewat animasi CSS (tanpa JavaScript) */
+        .tips {
+            display: grid;
+            margin-top: 22px;
+            padding: 12px 14px;
+            font-size: 14px;
+            font-style: italic;
+            line-height: 1.45;
+            color: var(--krem);
+            background: rgba(0, 0, 0, 0.22);
+            border-left: 4px solid var(--emas);
+            border-radius: 4px 10px 10px 4px;
+        }
+
+        /* Semua tips menempati sel grid yang sama; awalnya transparan, animasi memunculkannya satu per satu */
+        .tips p {
+            grid-area: 1 / 1;
+            margin: 0;
+            opacity: 0;
+            animation: gantiTips 30s infinite;
+        }
+
+        /* Tiap tips tampil 6 detik. Jeda animasi = urutan tips x 6 detik */
+        .tips p:nth-child(2) { animation-delay: 6s; }
+        .tips p:nth-child(3) { animation-delay: 12s; }
+        .tips p:nth-child(4) { animation-delay: 18s; }
+        .tips p:nth-child(5) { animation-delay: 24s; }
+
+        /* Muncul pelan, tampil sebentar, lalu memudar (satu putaran = 30 detik untuk 5 tips) */
+        @keyframes gantiTips {
+            0%   { opacity: 0; }
+            3%   { opacity: 1; }
+            17%  { opacity: 1; }
+            20%  { opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        .tips strong { font-style: normal; color: var(--emas); }
+
+        /* Footer kecil */
+        .kaki { margin-top: 20px; text-align: center; font-size: 12px; color: rgba(255, 255, 255, 0.6); }
+
+        /* Matikan animasi bagi pengguna yang memilih mengurangi gerakan */
+        @media (prefers-reduced-motion: reduce) {
+            .bola, .kartu { animation: none; }
+            .tombol-masuk { transition: none; }
+            .tips p { animation: none; }
+            .tips p:first-child { opacity: 1; } /* tampilkan hanya tips pertama */
+        }
+    </style>
+</head>
+<body>
+    <!-- Hiasan latar: 4 lingkaran emas yang melayang pelan (hanya hiasan, disembunyikan dari pembaca layar) -->
+    <div class="latar" aria-hidden="true">
+        <span class="bola"></span>
+        <span class="bola"></span>
+        <span class="bola"></span>
+        <span class="bola"></span>
+    </div>
+
+    <!-- Kotak login di tengah halaman -->
+    <main class="kartu">
+        <div class="judul">
+            <span class="merek">DAPURKU</span>
+            <h1>Halaman Login</h1>
+            <p>Masuk untuk melihat koleksi resepmu.</p>
+            <div class="garis-emas"></div>
+        </div>
+
+        <!-- Form dikirim ke login.php lewat POST. login.php yang memeriksa email dan password -->
+        <form action="bagian setelah login/backend.php" method="post">
+            <!-- Kolom email. name="email" harus sama dengan yang dibaca login.php -->
+            <div class="kolom">
+                <label for="email">Email Pengguna</label>
+                <input type="email" name="email" id="email" placeholder="Tuliskan Email Anda" autocomplete="email" required>
+            </div>
+
+            <!-- Kolom password. type="password" menyembunyikan ketikan -->
+            <div class="kolom">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" placeholder="Tuliskan Password Anda" autocomplete="current-password" required>
+            </div>
+
+            <!-- Tombol untuk mengirim form -->
+            <button type="submit" name="login" class="tombol-masuk">Masuk Sekarang</button>
+        </form>
+
+        <!-- Link ke halaman pendaftaran -->
+        <p class="link-daftar">Belum punya akun? <a href="Real_Register_Page.php">Daftar di sini</a></p>
+
+        <!-- Tips dapur: lima tips yang tampil bergantian (diatur CSS, tanpa JavaScript) -->
+        <div class="tips">
+            <p><strong>Tips dapur:</strong> Panaskan wajan dulu sebelum menuang minyak, supaya makanan tidak lengket.</p>
+            <p><strong>Tips dapur:</strong> Garam di akhir masak sayur bening agar warna sayur tetap hijau segar.</p>
+            <p><strong>Tips dapur:</strong> Istirahatkan daging 5 menit setelah dimasak supaya sarinya tidak keluar.</p>
+            <p><strong>Tips dapur:</strong> Bumbu halus ditumis sampai harum dan minyaknya keluar, rasanya jadi lebih mantap.</p>
+            <p><strong>Tips dapur:</strong> Rendam bawang merah dalam air dingin sebentar agar mata tidak perih saat mengiris.</p>
+        </div>
+
+        <p class="kaki">&copy; 2026 Dapurku, Kelompok 4</p>
+    </main>
+</body>
+</html>
